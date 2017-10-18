@@ -7,6 +7,8 @@ namespace System.Collections.Generic
     /// </summary>
     internal static class UnsafeEqualityComparerFactory
     {
+        private static readonly object StringEqualityComparer = new UnsafeEqualityComparer_String();
+
         public static IEqualityComparer<T> Create<T>()
         {
             var keyType = typeof(T);
@@ -31,6 +33,10 @@ namespace System.Collections.Generic
             {
                 return new UnsafeEqualityComparer_UInt64<T>();
             }
+            if (keyType == typeof(string))
+            {
+                return (IEqualityComparer<T>) StringEqualityComparer;
+            }
             return null; // float, double, structs
         }
     }
@@ -38,7 +44,7 @@ namespace System.Collections.Generic
     /// <summary>
     ///     An implementation of <see cref="IEqualityComparer{T}" /> for 32 bit signed integer types.
     /// </summary>
-    /// <typeparam name="T">The enum type to compare.</typeparam>
+    /// <typeparam name="T">The interger type to compare.</typeparam>
     internal struct UnsafeEqualityComparer_Int32<T> : IEqualityComparer<T>
     {
         [MethodImpl(MethodImplOptions.ForwardRef)]
@@ -51,7 +57,7 @@ namespace System.Collections.Generic
     /// <summary>
     ///     An implementation of <see cref="IEqualityComparer{T}" /> for 64 bit signed integer types.
     /// </summary>
-    /// <typeparam name="T">The enum type to compare.</typeparam>
+    /// <typeparam name="T">The interger type to compare.</typeparam>
     internal struct UnsafeEqualityComparer_Int64<T> : IEqualityComparer<T>
     {
         [MethodImpl(MethodImplOptions.ForwardRef)]
@@ -64,7 +70,7 @@ namespace System.Collections.Generic
     /// <summary>
     ///     An implementation of <see cref="IEqualityComparer{T}" /> for 64 bit unsigned integer types.
     /// </summary>
-    /// <typeparam name="T">The enum type to compare.</typeparam>
+    /// <typeparam name="T">The interger type to compare.</typeparam>
     internal struct UnsafeEqualityComparer_UInt64<T> : IEqualityComparer<T>
     {
         [MethodImpl(MethodImplOptions.ForwardRef)]
@@ -72,5 +78,42 @@ namespace System.Collections.Generic
 
         [MethodImpl(MethodImplOptions.ForwardRef)]
         public extern int GetHashCode(T obj);
+    }
+
+    /// <summary>
+    ///     An implementation of <see cref="IEqualityComparer{T}" /> for the string types.
+    /// </summary>
+    internal struct UnsafeEqualityComparer_String : IEqualityComparer<string>
+    {
+        public bool Equals(string x, string y)
+        {
+            return string.Equals(x, y);
+        }
+
+        public int GetHashCode(string obj)
+        {
+            unsafe
+            {
+                var hash1 = (5381 << 16) + 5381;
+                var hash2 = hash1;
+                var len = obj.Length;
+                fixed (char* pobj = obj)
+                {
+                    var pint = (int*) pobj;
+                    while (len > 2)
+                    {
+                        hash1 = ((hash1 << 5) + hash1 + (hash1 >> 27)) ^ pint[0];
+                        hash2 = ((hash2 << 5) + hash2 + (hash2 >> 27)) ^ pint[1];
+                        pint += 2;
+                        len -= 4;
+                    }
+                    if (len > 0)
+                    {
+                        hash1 = ((hash1 << 5) + hash1 + (hash1 >> 27)) ^ pint[0];
+                    }
+                }
+                return hash1 + hash2 * 1566083941;
+            }
+        }
     }
 }
