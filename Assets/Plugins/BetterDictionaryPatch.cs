@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 /// <summary>
-///     An enhanced System.Collections.Dictionary for Unity
+///     An enhanced System.Collections.Generic.Dictionary for Unity
 /// </summary>
 /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
 /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
@@ -32,6 +32,30 @@ public class Dictionary<TKey, TValue> : BetterDictionary<TKey, TValue>
 
     public Dictionary(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparer)
         : base(dictionary, comparer)
+    {
+    }
+}
+
+/// <summary>
+///     An enhanced System.Collections.Generic.HashSet for Unity
+/// </summary>
+/// <typeparam name="T">The type of elements in the hash set.</typeparam>
+/// <inheritdoc />
+public class HashSet<T> : BetterHashSet<T>
+{
+    public HashSet()
+    {
+    }
+
+    public HashSet(IEqualityComparer<T> comparer) : base(comparer)
+    {
+    }
+
+    public HashSet(IEnumerable<T> collection) : base(collection)
+    {
+    }
+
+    public HashSet(IEnumerable<T> collection, IEqualityComparer<T> comparer) : base(collection, comparer)
     {
     }
 }
