@@ -1,7 +1,7 @@
 ﻿namespace System.Collections.Generic
 {
     /// <summary>
-    ///     An enhanced System.Collections.Dictionary for Unity
+    ///     An enhanced System.Collections.Generic.Dictionary for Unity
     /// </summary>
     /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
@@ -27,7 +27,7 @@
         }
 
         public BetterDictionary(IDictionary<TKey, TValue> dictionary)
-            : base(dictionary, null)
+            : base(dictionary, EqualityComparer)
         {
         }
 
