@@ -1,7 +1,5 @@
 BetterDictionary for Unity
 ===
-An enhanced System.Collections.Dictionary for Unity
-
 BetterDictionaryクラスはSystem.Collections.Generic.DictionaryクラスをUnity向けに高速化したものです。  
 (※.NET Core 2.0等では逆に遅くなるのでご注意ください)
 
