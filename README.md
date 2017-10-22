@@ -18,7 +18,8 @@ BetterDictionary for Unity
 
 導入方法
 ---
-1. 本リポジトリのAssets/Plugins以下を自身のプロジェクトにコピーしてください。
+1. [リリースページ](https://github.com/komatus/BetterDictionary/releases)から最新版の.unitypackageをダウンロード＆インストールします。
+    - リポジトリのAssets/Plugins以下を直接自身のプロジェクトにコピーしても問題ありません。
 1. 既存コードの`new Dictionary`を`new Better.Dictionary`に変更します。
     ```csharp
     private Dictionary<string, string> _dict = new Better.Dictionary<string, string>();
