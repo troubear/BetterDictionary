@@ -20,10 +20,18 @@ BetterDictionary for Unity
 ---
 1. [リリースページ](https://github.com/komatus/BetterDictionary/releases)から最新版の.unitypackageをダウンロード＆インストールします。
     - リポジトリのAssets/Plugins以下を直接自身のプロジェクトにコピーしても問題ありません。
-1. 既存コードの`new Dictionary`を`new Better.Dictionary`に変更します。
+1. 既存コードを以下のように変更します。  
+    
     ```csharp
-    private Dictionary<string, string> _dict = new Better.Dictionary<string, string>();
-    ``` 
+    // Before:
+    Dictionary<MyEnum, string> _dict = new Dictionary<MyEnum, string>();
+    HashSet<string> _strings         = new HashSet<string>();
+
+    // After:
+    Dictionary<MyEnum, string> _dict = new Better.Dictionary<MyEnum, string>();
+    HashSet<string> _strings         = new Better.HashSet<string>();
+    ```
+
 1. または、`PlayerSettings`の`Scripting Define Symbols`に`BETTER_PATCH`を追加し、プロジェクトソース内で使用されているSystem.Collections.Generic名前空間のDictionary/HashSetクラスを本ライブラリのクラスで一括置換※します。
     - ※`BETTER_PATCH`シンボルの追加によって、本ライブラリのDictionary/HashSetクラスがグローバル名前空間で定義されます。
 
