@@ -9,7 +9,7 @@ namespace Better
     ///     Provides a set of static (Shared in Visual Basic) methods for querying objects that implement
     ///     <see cref="T:System.Collections.Generic.IEnumerable`1" />.
     /// </summary>
-    public static class Enumerable
+    public static class BetterEnumerable
     {
         /// <summary>
         ///     Creates a <see cref="T:Dictionary`2" /> from an
