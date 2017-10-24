@@ -16,11 +16,6 @@ namespace Better
         public readonly string Value;
 
         /// <summary>
-        ///     The length of the string.
-        /// </summary>
-        public readonly int Length;
-
-        /// <summary>
         ///     The hash code of the string.
         /// </summary>
         public readonly int HashCode;
@@ -28,13 +23,12 @@ namespace Better
         public StringKey(string str)
         {
             Value = str;
-            Length = str.Length;
-            HashCode = StringHashCode.Calculate(str, Length);
+            HashCode = StringHashCode.Calculate(str);
         }
 
         public bool Equals(StringKey key)
         {
-            return Length == key.Length && Value.Equals(key.Value);
+            return Value.Equals(key.Value);
         }
 
         public override bool Equals(object obj)

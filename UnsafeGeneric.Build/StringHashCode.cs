@@ -5,11 +5,12 @@
     /// </summary>
     public static class StringHashCode
     {
-        public static unsafe int Calculate(string str, int len)
+        public static unsafe int Calculate(string str)
         {
             fixed (char* fixedStr = str)
             {
                 var p = fixedStr;
+                var len = str.Length;
 
                 // 1~16 characters
                 switch (len)

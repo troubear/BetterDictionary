@@ -54,7 +54,7 @@ namespace UnsafeGeneric
 
         public int GetHashCode(string obj)
         {
-            return StringHashCode.Calculate(obj, obj.Length);
+            return StringHashCode.Calculate(obj);
         }
     }
 }
