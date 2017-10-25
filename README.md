@@ -35,6 +35,48 @@ BetterDictionary for Unity
 1. または、`PlayerSettings`の`Scripting Define Symbols`に`BETTER_PATCH`を追加し、プロジェクトソース内で使用されているSystem.Collections.Generic名前空間のDictionary/HashSetクラスを本ライブラリのクラスで一括置換※します。
     - ※`BETTER_PATCH`シンボルの追加によって、本ライブラリのDictionary/HashSetクラスがグローバル名前空間で定義されます。
 
+StringKey (ハッシュ計算済み文字列キー)
+---
+Better.StringKeyを使用することで、Dictionary/HashSetへのアクセスを高速化することができます。
+
+~~~csharp
+using Better;
+
+// Typical extension method of the Dictionary class
+public static void AddOrUpdate<TKey, TValue>(
+  this Dictionary<TKey, TValue> dict, TKey key, TValue value)
+{
+  if (dict.ContainsKey(key))
+  {
+    dict[key] = value;
+  }
+  else
+  {
+    dict.Add(key, value);
+  }
+}
+
+Dictionary<string, int> dict1;
+Dictionary<StringKey, int> dict2;
+
+dict1.AddOrUpdate("hogehoge", 1234);
+
+// Depending on the length of the string,
+// several percent to tens of percent faster than the raw string key.
+// 文字列の長さによって、stringキーより数パーセント～数十パーセント速くなります。
+dict2.AddOrUpdate("hogehoge", 1234);
+
+// Attention!!
+// However, in the case of a single operation it will slow down about 30%.
+// ※但し、単一オペレーションでは約30%程度遅くなります。
+dict2["hogehoge"] = 5678;
+
+// Therefore, it is strongly recommended to prepare StringKey in advance.
+// 従って、StringKeyを事前に用意しておくことを強く推奨します。
+static StringKey HogeHoge = "hogehoge";
+dict2[HogeHoge] = 5678; // Faster than dict1["hogehoge"]
+~~~
+
 TODO
 ---
 - 詳細なパフォーマンス計測＆グラフ化
