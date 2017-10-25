@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnsafeGeneric;
 
-namespace UnsafeGeneric
+namespace Better
 {
     /// <summary>
-    ///     Provides the factory method of the unsafe EqualityComparers.
+    ///     Provides the factory method of the better EqualityComparers.
     /// </summary>
     public static class EqualityComparerFactory
     {
         private static readonly object StringEqualityComparer = new StringEqualityComparer();
+        private static readonly object StringKeyEqualityComparer = new StringKeyEqualityComparer();
 
         public static IEqualityComparer<T> Create<T>()
         {
@@ -36,9 +38,29 @@ namespace UnsafeGeneric
             }
             if (keyType == typeof(string))
             {
-                return (IEqualityComparer<T>) StringEqualityComparer;
+                return (IEqualityComparer<T>)StringEqualityComparer;
+            }
+            if (keyType == typeof(StringKey))
+            {
+                return (IEqualityComparer<T>)StringKeyEqualityComparer;
             }
             return null; // float, double, structs
+        }
+    }
+
+    /// <summary>
+    ///     An implementation of <see cref="IEqualityComparer{T}" /> for the <see cref="StringKey" /> type.
+    /// </summary>
+    internal struct StringKeyEqualityComparer : IEqualityComparer<StringKey>
+    {
+        public bool Equals(StringKey x, StringKey y)
+        {
+            return x.Equals(y);
+        }
+
+        public int GetHashCode(StringKey obj)
+        {
+            return obj.HashCode;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnsafeGeneric;
 
 #if BETTER_PATCH
 namespace Better
