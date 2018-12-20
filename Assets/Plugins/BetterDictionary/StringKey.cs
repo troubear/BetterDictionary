@@ -1,5 +1,5 @@
 ﻿using System;
-using UnsafeGeneric;
+using Better.UnsafeGeneric;
 
 #if !BETTER_PATCH
 namespace Better
@@ -28,7 +28,7 @@ namespace Better
 
         public bool Equals(StringKey key)
         {
-            return Value.Equals(key.Value);
+            return string.Equals(Value, key.Value);
         }
 
         public override bool Equals(object obj)
@@ -38,8 +38,7 @@ namespace Better
                 return Equals((StringKey)obj);
             }
 
-            // exception will be thrown later for null this
-            return this == null;
+            return false;
         }
 
         public override int GetHashCode()
@@ -49,12 +48,12 @@ namespace Better
 
         public static bool operator ==(StringKey a, StringKey b)
         {
-            return a.Equals(b);
+            return a.HashCode == b.HashCode && a.Value == b.Value;
         }
 
         public static bool operator !=(StringKey a, StringKey b)
         {
-            return !a.Equals(b);
+            return a.HashCode != b.HashCode || a.Value != b.Value;
         }
 
         // StringKey key = "Foo";

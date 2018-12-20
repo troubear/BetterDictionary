@@ -1,6 +1,6 @@
 ﻿// Int32EqualityComparer<T>
 .class private sealed sequential ansi beforefieldinit
-  UnsafeGeneric.Int32EqualityComparer`1<T>
+  Better.UnsafeGeneric.Int32EqualityComparer`1<T>
     extends [mscorlib]System.ValueType
     implements class [mscorlib]System.Collections.Generic.IEqualityComparer`1<!0/*T*/>
 {
@@ -28,7 +28,7 @@
 
 // Int64EqualityComparer<T>
 .class private sealed sequential ansi beforefieldinit
-  UnsafeGeneric.Int64EqualityComparer`1<T>
+  Better.UnsafeGeneric.Int64EqualityComparer`1<T>
     extends [mscorlib]System.ValueType
     implements class [mscorlib]System.Collections.Generic.IEqualityComparer`1<!0/*T*/>
 {
@@ -63,7 +63,7 @@
 
 // UInt64EqualityComparer<T>
 .class private sealed sequential ansi beforefieldinit
-  UnsafeGeneric.UInt64EqualityComparer`1<T>
+  Better.UnsafeGeneric.UInt64EqualityComparer`1<T>
     extends [mscorlib]System.ValueType
     implements class [mscorlib]System.Collections.Generic.IEqualityComparer`1<!0/*T*/>
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnsafeGeneric;
+using Better.UnsafeGeneric;
 
 namespace Better
 {
@@ -44,18 +44,18 @@ namespace Better
             {
                 return (IEqualityComparer<T>)StringKeyEqualityComparer;
             }
-            return null; // float, double, structs
+            return null; // Use default EqualityComparer
         }
     }
 
     /// <summary>
     ///     An implementation of <see cref="IEqualityComparer{T}" /> for the <see cref="StringKey" /> type.
     /// </summary>
-    internal struct StringKeyEqualityComparer : IEqualityComparer<StringKey>
+    class StringKeyEqualityComparer : IEqualityComparer<StringKey>
     {
         public bool Equals(StringKey x, StringKey y)
         {
-            return x.Equals(y);
+            return string.Equals(x.Value, y.Value);
         }
 
         public int GetHashCode(StringKey obj)

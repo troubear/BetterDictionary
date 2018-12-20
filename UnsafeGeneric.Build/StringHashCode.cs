@@ -1,4 +1,4 @@
-﻿namespace UnsafeGeneric
+﻿namespace Better.UnsafeGeneric
 {
     /// <summary>
     ///     Provides the string hash code calculation method.
